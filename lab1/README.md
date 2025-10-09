@@ -152,3 +152,24 @@ $$bbbbb \rightarrow bab$$
 $$bbbbb \rightarrow bba$$
 
 Как мы видим, SRS не конфлюэнтна.
+
+### Пополняемость по Кнуту-Бендикса
+Доведем сиситему до конфлюэнтности. 
+
+1. Из предыдущего пункта получаем:
+
+$$bba \rightarrow bab$$
+
+2. $$bbbba \rightarrow baa$$
+
+$$bbbba \rightarrow bbbab \rightarrow bbabb \rightarrow babbb$$
+
+Получаем: $$babbb \rightarrow baa$$
+
+3. $$babbbb \rightarrow baab$$
+
+$$babbbb \rightarrow baba$$
+
+Получаем: $$baba \rightarrow baab$$
+
+Заметим, что при пополнение по Кнуту-Бендиксу мы получаем те же правила, что были в минимальной системе.
