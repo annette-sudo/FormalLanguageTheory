@@ -160,13 +160,17 @@ $$bbbbb \rightarrow bba$$
 
 $$bba \rightarrow bab$$
 
-2. $$bbbba \rightarrow baa$$
+2. Проверим слово $bbbba$:
+
+$$bbbba \rightarrow baa$$
 
 $$bbbba \rightarrow bbbab \rightarrow bbabb \rightarrow babbb$$
 
 Получаем: $$babbb \rightarrow baa$$
 
-3. $$babbbb \rightarrow baab$$
+3. Проверим слово $babbbb$:
+
+$$babbbb \rightarrow baab$$
 
 $$babbbb \rightarrow baba$$
 
