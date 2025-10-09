@@ -177,3 +177,62 @@ $$babbbb \rightarrow baba$$
 Получаем: $$baba \rightarrow baab$$
 
 Заметим, что при пополнение по Кнуту-Бендиксу мы получаем те же правила, что были в минимальной системе.
+
+
+## Инварианты 
+Исходная SRS $\tau$ (с переориентированными правилами):
+
+$$
+aabbbaa \rightarrow abbaba \\
+$$
+$$
+abab \rightarrow aaa \\
+$$
+$$
+baaab \rightarrow abba \\ 
+$$
+$$
+bbbb \rightarrow ba \\
+$$
+
+Минимальная SRS $\tau'$:
+
+$$
+bba \rightarrow bab \\
+$$
+$$
+aaaa \rightarrow aaa \\
+$$
+$$
+aaab \rightarrow aaa \\
+$$
+$$
+abaa \rightarrow aaa \\
+$$
+$$
+abab \rightarrow aaa \\
+$$
+$$
+baaa \rightarrow aaa \\
+$$
+$$
+baba \rightarrow baab \\
+$$
+$$
+bbbb \rightarrow ba \\
+$$
+$$
+baaba \rightarrow aaa \\
+$$
+$$
+baabb \rightarrow aaa \\
+$$
+$$
+babbb \rightarrow baa \\
+$$
+
+Инварианты:
+1. Изменение чётности $a$
+2. Если есть $bbb$, то оно сокращается, и добавляется $a$
+3. Пары, где $a$ левее $b$, уменьшается 
+4. $w(aa) + 2w(bb) - 2w(ab) + 6w(bb) = w'(aa) + 2w'(bb) - 2w'(ab) + 6w'(bb)$
