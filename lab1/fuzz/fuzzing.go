@@ -7,35 +7,8 @@ import (
 	"lab1/src"
 )
 
-var T = []src.RewritingRule{
-	{Left: "aabbbaa", Right: "abbaba"},
-	{Left: "abab", Right: "aaa"},
-	{Left: "baaab", Right: "abba"},
-	{Left: "bbbb", Right: "ba"},
-}
-
-var T_1 = []src.RewritingRule{
-	{Left: "bba", Right: "bab"},
-	{Left: "aaaa", Right: "aaa"},
-	{Left: "aaab", Right: "aaa"},
-	{Left: "abaa", Right: "aaa"},
-	{Left: "abab", Right: "aaa"},
-	{Left: "baaa", Right: "aaa"},
-	{Left: "baba", Right: "baab"},
-	{Left: "bbbb", Right: "ba"},
-	{Left: "baaba", Right: "aaa"},
-	{Left: "baabb", Right: "aaa"},
-	{Left: "babbb", Right: "baa"},
-}
-
 var Graph []*Vertex
 var visited = make(map[string]bool)
-
-const minWordLen = 10
-const minSteps = 10
-
-const maxWordLen = 30
-const maxSteps = 30
 
 type Vertex struct {
 	word   string
@@ -194,13 +167,13 @@ func BuildTreeBFS2(wordStart string, srs_1 []src.RewritingRule) (*Vertex, *Verte
 }
 
 func main() {
-	str := src.GenerateWords(minWordLen, maxWordLen)
+	str := src.GenerateWords(src.MinWordLen, src.MaxWordLen)
 	fmt.Printf("Generated word: %s\n", str)
-	chain, w := src.GenerateChain(minSteps, maxSteps, str, T)
+	chain, w := src.GenerateChain(src.MinSteps, src.MaxSteps, str, src.T)
 	fmt.Printf("Rewriting chain performed according to rule T:\n")
 	for _, newStr := range chain {
 		fmt.Println(newStr)
 	}
 	fmt.Printf("Final word: %s\n\n", w)
-	WordToWord(str, w, T_1)
+	WordToWord(str, w, src.T_1)
 }

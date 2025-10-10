@@ -8,6 +8,33 @@ type RewritingRule struct {
 	Left, Right string
 }
 
+var T = []RewritingRule{
+	{Left: "aabbbaa", Right: "abbaba"},
+	{Left: "abab", Right: "aaa"},
+	{Left: "baaab", Right: "abba"},
+	{Left: "bbbb", Right: "ba"},
+}
+
+var T_1 = []RewritingRule{
+	{Left: "bba", Right: "bab"},
+	{Left: "aaaa", Right: "aaa"},
+	{Left: "aaab", Right: "aaa"},
+	{Left: "abaa", Right: "aaa"},
+	{Left: "abab", Right: "aaa"},
+	{Left: "baaa", Right: "aaa"},
+	{Left: "baba", Right: "baab"},
+	{Left: "bbbb", Right: "ba"},
+	{Left: "baaba", Right: "aaa"},
+	{Left: "baabb", Right: "aaa"},
+	{Left: "babbb", Right: "baa"},
+}
+
+const MinWordLen = 10
+const MinSteps = 10
+
+const MaxWordLen = 30
+const MaxSteps = 30
+
 func GenerateChain(minSteps, maxSteps int, word string, srs []RewritingRule) ([]string, string) {
 	var chain []string
 	steps := rand.Intn(maxSteps-minSteps+1) + minSteps
@@ -47,4 +74,8 @@ func AllVariantsToRewrite(wordStart string, srs_1 []RewritingRule) []string {
 		}
 	}
 	return newStrings
+}
+
+func RewritingRuleToString(srs RewritingRule) string {
+	return srs.Left + " -> " + srs.Right
 }
