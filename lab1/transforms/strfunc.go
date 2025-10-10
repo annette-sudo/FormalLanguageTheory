@@ -49,5 +49,4 @@ func ShortLex(a, b string) (string, string) {
 		return b, a
 	}
 	return a, b
-
 }

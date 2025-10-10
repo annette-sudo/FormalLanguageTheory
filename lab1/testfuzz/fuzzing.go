@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"slices"
 
-	"lab1/src"
+	transforms "lab1/transforms"
 )
 
 var Graph []*Vertex
@@ -15,13 +15,13 @@ type Vertex struct {
 	parent *Vertex
 }
 
-func WordToWord(word, word_1 string, srs_1 []src.RewritingRule) {
+func WordToWord(word, word_1 string, srs_1 []transforms.RewritingRule) {
 	if word == word_1 {
 		fmt.Printf("«%s» and «%s» are equal.\n", word, word_1)
 		return
 	}
 
-	wordStart, wordFinish := src.ShortLex(word, word_1)
+	wordStart, wordFinish := transforms.ShortLex(word, word_1)
 
 	vertexFinalWord := BuildTreeBFS(wordStart, wordFinish, srs_1)
 
@@ -32,7 +32,7 @@ func WordToWord(word, word_1 string, srs_1 []src.RewritingRule) {
 		for _, elChain := range chain {
 			fmt.Println(elChain)
 		}
-		_, NF := src.GenerateChain(100, 100, wordFinish, srs_1)
+		_, NF := transforms.GenerateChain(100, 100, wordFinish, srs_1)
 		fmt.Printf("\nNormal form: %s\n", NF)
 	} else {
 		fmt.Printf("There is no direct chain of transformations from «%s» to «%s»\n", wordStart, wordFinish)
@@ -54,12 +54,12 @@ func WordToWord(word, word_1 string, srs_1 []src.RewritingRule) {
 				fmt.Println(elChain)
 			}
 
-			_, NF := src.GenerateChain(100, 100, commonVertex.word, srs_1)
+			_, NF := transforms.GenerateChain(100, 100, commonVertex.word, srs_1)
 			fmt.Printf("\nNormal form: %s\n", NF)
 		} else {
 			fmt.Println("Let's check equivalence through reduction to normal form")
-			_, NF := src.GenerateChain(100, 100, wordStart, srs_1)
-			_, NF1 := src.GenerateChain(100, 100, wordFinish, srs_1)
+			_, NF := transforms.GenerateChain(100, 100, wordStart, srs_1)
+			_, NF1 := transforms.GenerateChain(100, 100, wordFinish, srs_1)
 			if NF == NF1 {
 				fmt.Println("SRSs are equivalent.")
 				fmt.Printf("The normal form of words «%s» and «%s» is «%s»\n", wordStart, wordFinish, NF)
@@ -95,7 +95,7 @@ func BuildChain(v *Vertex) []string {
 	return chain
 }
 
-func BuildTreeBFS(wordStart, wordFinish string, srs_1 []src.RewritingRule) *Vertex {
+func BuildTreeBFS(wordStart, wordFinish string, srs_1 []transforms.RewritingRule) *Vertex {
 	var queue []*Vertex
 	rootTree := &Vertex{
 		word:   wordStart,
@@ -113,7 +113,7 @@ func BuildTreeBFS(wordStart, wordFinish string, srs_1 []src.RewritingRule) *Vert
 			return currentVertex
 		}
 
-		newWords := src.AllVariantsToRewrite(currentVertex.word, srs_1)
+		newWords := transforms.AllVariantsToRewrite(currentVertex.word, srs_1)
 
 		for _, newWord := range newWords {
 			if visited[newWord] || (len(wordFinish) > len(newWord)) {
@@ -133,7 +133,7 @@ func BuildTreeBFS(wordStart, wordFinish string, srs_1 []src.RewritingRule) *Vert
 	return nil
 }
 
-func BuildTreeBFS2(wordStart string, srs_1 []src.RewritingRule) (*Vertex, *Vertex) {
+func BuildTreeBFS2(wordStart string, srs_1 []transforms.RewritingRule) (*Vertex, *Vertex) {
 	var queue []*Vertex
 
 	rootTree := &Vertex{
@@ -146,7 +146,7 @@ func BuildTreeBFS2(wordStart string, srs_1 []src.RewritingRule) (*Vertex, *Verte
 		currentVertex := queue[0]
 		queue = queue[1:]
 
-		newWords := src.AllVariantsToRewrite(currentVertex.word, srs_1)
+		newWords := transforms.AllVariantsToRewrite(currentVertex.word, srs_1)
 
 		for _, newWord := range newWords {
 			if visited[newWord] {
@@ -167,13 +167,13 @@ func BuildTreeBFS2(wordStart string, srs_1 []src.RewritingRule) (*Vertex, *Verte
 }
 
 func main() {
-	str := src.GenerateWords(src.MinWordLen, src.MaxWordLen)
+	str := transforms.GenerateWords(transforms.MinWordLen, transforms.MaxWordLen)
 	fmt.Printf("Generated word: %s\n", str)
-	chain, w := src.GenerateChain(src.MinSteps, src.MaxSteps, str, src.T)
+	chain, w := transforms.GenerateChain(transforms.MinSteps, transforms.MaxSteps, str, transforms.T)
 	fmt.Printf("Rewriting chain performed according to rule T:\n")
 	for _, newStr := range chain {
 		fmt.Println(newStr)
 	}
 	fmt.Printf("Final word: %s\n\n", w)
-	WordToWord(str, w, src.T_1)
+	WordToWord(str, w, transforms.T_1)
 }

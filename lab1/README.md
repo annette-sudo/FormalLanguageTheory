@@ -176,7 +176,99 @@ $$babbbb \rightarrow baba$$
 
 Получаем: $$baba \rightarrow baab$$
 
-Заметим, что при пополнение по Кнуту-Бендиксу мы получаем те же правила, что были в минимальной системе.
+4. Проверим слово $babbba$:
+
+$$babbba \rightarrow baaa$$
+
+$$babbba \rightarrow babbab \rightarrow bababb \rightarrow baaab \rightarrow abba \rightarrow abab \rightarrow aaa$$
+
+Получаем: $$baaa \rightarrow aaa$$
+
+5. Проверим слово $baaab$:
+
+$$baaab \rightarrow aaab$$
+
+$$baaab \rightarrow abba \rightarrow abab \rightarrow aaa$$
+
+Получаем: $$aaab \rightarrow aaa$$
+
+6. Проверим слово $babab$: 
+
+$$babab \rightarrow baabb$$
+
+$$babab \rightarrow baaaa \rightarrow aaa$$
+
+Получаем: $$baabb \rightarrow aaa$$
+
+7. Проверим слово $abbbbba$: 
+
+$$abbbbba \rightarrow ababa \rightarrow aaaa$$
+
+$$abbbbba \rightarrow abbbbab \rightarrow abbbabb \rightarrow abbabbb \rightarrow ababbbb \rightarrow aaabbbb \rightarrow aaa$$
+
+Получаем: $$aaaa \rightarrow aaa$$
+
+7. Ещё раз рассмотрим слово $abbbbba$: 
+
+$$abbbbba \rightarrow ababa \rightarrow baaaba$$
+
+$$abbbbba \rightarrow abbbbab \rightarrow abbbabb \rightarrow abbabbb \rightarrow ababbbb \rightarrow aaabbb \rightarrow aaa$$
+
+Получаем: $$baaaba \rightarrow aaa$$
+
+8. Проверим слово $abbbba$: 
+
+$$abbbba \rightarrow abaa$$
+
+$$abbbba \rightarrow abbbab \rightarrow abbabb \rightarrow ababbb \rightarrow aaabb \rightarrow aaa$$
+
+Получаем: $$abaa \rightarrow aaa$$
+
+
+Пополненая система:
+
+$$
+aabbbaa \rightarrow abbaba \\
+$$
+$$
+abab \rightarrow aaa \\
+$$
+$$
+baaab \rightarrow abba \\ 
+$$
+$$
+bbbb \rightarrow ba \\
+$$
+$$
+bba \rightarrow bab \\
+$$
+$$
+aaaa \rightarrow aaa \\
+$$
+$$
+aaab \rightarrow aaa \\
+$$
+$$
+abaa \rightarrow aaa \\
+$$
+$$
+baaa \rightarrow aaa \\
+$$
+$$
+baba \rightarrow baab \\
+$$
+$$
+baaba \rightarrow aaa \\
+$$
+$$
+baabb \rightarrow aaa \\
+$$
+$$
+babbb \rightarrow baa \\
+$$
+
+
+Заметим, что при пополнение по Кнуту-Бендиксу мы получаем те же правила, что были в минимальной системе. Это объясняется тем, что из конечного числа классов, следует конечное множество переходов между ними.
 
 
 ## Инварианты 
@@ -232,7 +324,5 @@ babbb \rightarrow baa \\
 $$
 
 Инварианты:
-1. Изменение чётности $a$
-2. Если есть $bbb$, то оно сокращается, и добавляется $a$
-3. Пары, где $a$ левее $b$, уменьшаются
-4. $w(aa) + 2w(bb) - 2w(ab) + 6w(bb) = w'(aa) + 2w'(bb) - 2w'(ab) + 6w'(bb)$
+1. Всегда есть буква $a$.
+2. Если есть $bbb$, то оно сокращается.
