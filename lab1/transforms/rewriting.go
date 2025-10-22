@@ -1,4 +1,4 @@
-package src
+package transforms
 
 import (
 	"math/rand"
@@ -9,6 +9,13 @@ type RewritingRule struct {
 }
 
 var T = []RewritingRule{
+	{Left: "abbaba", Right: "aabbbaa"},
+	{Left: "aaa", Right: "abab"},
+	{Left: "abba", Right: "baaab"},
+	{Left: "bbbb", Right: "ba"},
+}
+
+var T_orient = []RewritingRule{
 	{Left: "aabbbaa", Right: "abbaba"},
 	{Left: "abab", Right: "aaa"},
 	{Left: "baaab", Right: "abba"},

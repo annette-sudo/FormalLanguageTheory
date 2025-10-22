@@ -61,7 +61,7 @@ func WordToWord(word, word_1 string, srs_1 []transforms.RewritingRule) {
 			_, NF := transforms.GenerateChain(100, 100, wordStart, srs_1)
 			_, NF1 := transforms.GenerateChain(100, 100, wordFinish, srs_1)
 			if NF == NF1 {
-				fmt.Println("SRSs are equivalent.")
+				fmt.Println("Words belong to the same equivalence class.")
 				fmt.Printf("The normal form of words «%s» and «%s» is «%s»\n", wordStart, wordFinish, NF)
 			} else {
 				fmt.Println("FAIL! SRSs are not equivalent.")
