@@ -1,18 +1,10 @@
 # Лабораторная работа №1
 Дана SRS $\tau$:
 
-$$
-abbaba \rightarrow aabbbaa \\
-$$
-$$
-aaa \rightarrow abab \\
-$$
-$$
-abba \rightarrow baaab \\ 
-$$
-$$
-bbbb \rightarrow ba \\
-$$
+1. $$abbaba \rightarrow aabbbaa$$
+2. $$aaa \rightarrow abab$$
+3. $$abba \rightarrow baaab$$
+4. $$bbbb \rightarrow ba$$
 
 ## Завершимость 
 Данная SRS незавершима. Пример: 
@@ -20,18 +12,19 @@ $$
 $$
 w_1 abbaa w_2
 $$
-Применим правило $$abba \rightarrow baaab$$.
+Применим правило 3:
 $$
 w_1 baaaba w_2
 $$
-Применим правило $$aaa \rightarrow abab$$.
+Применим правило 2:
 $$
 w_1 bababba w_2
 $$
-Применим правило $$abba \rightarrow baaab$$.
+Применим правило 3:
 $$
 w_1 babbaaab w_2
 $$
+Сократим:
 $$
 w'_1 abbaa w'_2
 $$
@@ -62,7 +55,7 @@ $$
 abba \leftrightarrow baaab \\
 $$
 $$
-abab \leftrightarrow aaa \leftrightarrow baaa (ниже подробно это описывается) \\
+abab \leftrightarrow aaa \leftrightarrow baaa  \\
 $$
 $$
 aaaa \leftrightarrow aaa \leftrightarrow baaa \\
@@ -82,13 +75,13 @@ $$
 aabab \leftrightarrow aaaa \leftrightarrow baaa \\
 $$
 $$
-aabba \leftrightarrow abaaab (получили префикс abaa, рассмотренный выше) \\
+aabba \leftrightarrow abaaab \leftrightarrow baaabbbab \\
 $$
 $$
 abbba \leftrightarrow ab^6 \leftrightarrow abbaa \leftrightarrow  baaaba \\
 $$
 $$
-abbbb \leftrightarrow aba (слово длины 3, не подходит) \\
+abbbb \leftrightarrow aba  \\
 $$
 
 Проверим, что все такие слова длины 5 рассмотрели. Слов длины 5, где $b$ не стоит первой, всего $2^4 = 16$. Так и получается, 10 (слова с "неудачными" префиксами длины 4) + 5 (слова, рассмотренные выше) + 1 ($aabbb$). 
@@ -96,13 +89,13 @@ $$
 Теперь рассмотрим слова длины 6, где $b$ не стоит первой. Их всего $2^5 = 32$. Из предыдущих рассуждений получается, что всего 15 "неудачных" префиксов длины 5. Таким образом, можно не рассматривать 30 слов. Остаются $aabbbb$ и $aabbba$.
 
 $$
-aabbbb \leftrightarrow aaba (слово длины 4) \\
+aabbbb \leftrightarrow aaba  \\
 $$
 $$
-aabbba \leftrightarrow aab^6 \leftrightarrow aabbab \leftrightarrow abaaabb ("неудачный" префикс abaa)
+aabbba \leftrightarrow aab^6 \leftrightarrow aabbab \leftrightarrow abaaabb \\
 $$
 
-Дальше можно не рассматривать, так как слов длины 7, где $b$ не стоит первой, всего 64. У нас уже имеется 32 "неудачных" префикса длины 6, то есть всего они дают 72 слова. И так далее.
+В первом случае слово длины 4, а во втором "неудачный" префикс $abaa$. Дальше можно не рассматривать, так как слов длины 7, где $b$ не стоит первой, всего 64. У нас уже имеется 32 "неудачных" префикса длины 6, то есть всего они дают 72 слова. И так далее.
 
 Теперь мы получили первый набор:
 
