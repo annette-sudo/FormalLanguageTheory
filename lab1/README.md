@@ -69,7 +69,7 @@ $$
 Слова длины 5, где $b$ не стоит первой, исключая $aabbb$ и строки, где префиксом являются слова длины 4, рассмотренные выше (таких слов, очевидно, 10), не подходят так как:
 
 $$
-aabaa \leftrightarrow aabbbba \leftrightarrow aab^7 \leftrightarrow aabbabb \leftrightarrow abaaabbb (получили префикс abaa, рассмотренный выше) \\
+aabaa \leftrightarrow aabbbba \leftrightarrow aab^7 \leftrightarrow aabbabb \leftrightarrow abaaabbb  \\
 $$ 
 $$
 aabab \leftrightarrow aaaa \leftrightarrow baaa \\
