@@ -1,0 +1,30 @@
+digraph NPDA {
+	rankdir = LR
+	node [shape=circle]
+	start [label = "", shape = none]
+    start -> 0
+	0 [label="0"]
+	1 [label="1"]
+	2 [label="2", shape=doublecircle]
+	3 [label="3"]
+	4 [label="4"]
+	5 [label="5"]
+	6 [label="6"]
+    7 [label="7"]
+    8 [label="8", shape=doublecircle]
+	0 -> 1 [label="a"]
+	0 -> 3 [label="b, X/ABAX"]
+	1 -> 2 [label="b"]
+	3 -> 3 [label="b"]
+	3 -> 4 [label="a"]
+    3 -> 6 [label="a, A/ε"]
+	4 -> 3 [label="b, X/ABAAX"]
+	4 -> 5 [label="a"]
+    5 -> 3 [label="b"]
+
+    6 -> 3 [label="ε, A/ε"]
+	6 -> 7 [label="a"]
+    6 -> 8 [label="ε, Z0/Z0"]
+	
+	7 -> 3 [label="a, B/ε"]
+}
