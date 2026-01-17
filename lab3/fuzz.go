@@ -50,6 +50,7 @@ type NPDA_Transition struct {
 	symbol         byte
 	typeAction     string
 	symbolMagazine string
+	symbolPut      string
 }
 
 type NPDA struct {
@@ -80,12 +81,12 @@ func createNPDA() *NPDA {
 	q3.transitions = []*NPDA_Transition{
 		{EndState: q3, symbol: 'b', typeAction: "NONE"},
 		{EndState: q4, symbol: 'a', typeAction: "NONE"},
-		{EndState: q6, symbol: 'a', typeAction: "POP", symbolMagazine: "A"},
+		{EndState: q6, symbol: 'a', typeAction: "POP", symbolMagazine: "A", symbolPut: ""},
 	}
 
 	q4.transitions = []*NPDA_Transition{
 		{EndState: q5, symbol: 'a', typeAction: "NONE"},
-		{EndState: q3, symbol: 'b', typeAction: "PUSH", symbolMagazine: "ABAA"},
+		{EndState: q3, symbol: 'b', typeAction: "PUSH", symbolMagazine: "ABA"},
 	}
 
 	q5.transitions = []*NPDA_Transition{
@@ -93,13 +94,13 @@ func createNPDA() *NPDA {
 	}
 
 	q6.transitions = []*NPDA_Transition{
-		{EndState: q3, symbol: 'e', typeAction: "POP", symbolMagazine: "A"},
+		{EndState: q3, symbol: 'e', typeAction: "POP", symbolMagazine: "A", symbolPut: "A"},
 		{EndState: q7, symbol: 'a', typeAction: "NONE"},
 		{EndState: q8, symbol: 'e', typeAction: "LAST"},
 	}
 
 	q7.transitions = []*NPDA_Transition{
-		{EndState: q3, symbol: 'a', typeAction: "POP", symbolMagazine: "B"},
+		{EndState: q3, symbol: 'a', typeAction: "POP", symbolMagazine: "B", symbolPut: ""},
 	}
 
 	NPDA := &NPDA{
@@ -150,7 +151,7 @@ func checkNPDA(word string, npda *NPDA) bool {
 				newInterState := &NPDA_IntermediateState{
 					currentWord: interState.currentWord,
 					state:       q.transitions[i].EndState,
-					magazine:    strings.TrimPrefix(currentMagazine, trans.symbolMagazine),
+					magazine:    trans.symbolPut + strings.TrimPrefix(currentMagazine, trans.symbolMagazine),
 				}
 				stack = append(stack, newInterState)
 			} else if trans.symbol == 'e' && trans.typeAction == "LAST" && interState.magazine == "" {
@@ -178,12 +179,14 @@ func checkNPDA(word string, npda *NPDA) bool {
 					}
 					stack = append(stack, newInterState)
 				} else if trans.typeAction == "POP" {
-					newInterState := &NPDA_IntermediateState{
-						currentWord: newCurrentWord,
-						state:       trans.EndState,
-						magazine:    strings.TrimPrefix(currentMagazine, trans.symbolMagazine),
+					if strings.HasPrefix(currentMagazine, trans.symbolMagazine) {
+						newInterState := &NPDA_IntermediateState{
+							currentWord: newCurrentWord,
+							state:       trans.EndState,
+							magazine:    trans.symbolPut + strings.TrimPrefix(currentMagazine, trans.symbolMagazine),
+						}
+						stack = append(stack, newInterState)
 					}
-					stack = append(stack, newInterState)
 				}
 			}
 		}
@@ -303,6 +306,11 @@ func CYK(word string, grammar Grammar) bool {
 }
 
 func main() {
+	grammar, err := ParseGrammarFile("grammar/CF.txt")
+	if err != nil {
+		fmt.Printf("Ошибка: %v\n", err)
+		return
+	}
 	grammar_ll1, err := ParseGrammarFile("grammar/intersection_grammar_LL1.txt")
 	if err != nil {
 		fmt.Printf("Ошибка: %v\n", err)
@@ -318,14 +326,16 @@ func main() {
 	NPDA := createNPDA()
 
 	fmt.Println("Проверка для слов из языка")
-	for i := 0; i < 1000; i++ {
+	for i := 0; i < 500; i++ {
 		word := generateS()
 		if len(word) < 50 {
+			cf := CYK(word, *grammar)
 			ll1 := CYK(word, *grammar_ll1)
 			lr0 := CYK(word, *grammar_lr0)
 			pda := checkNPDA(word, NPDA)
-			if !(ll1 == lr0 && lr0 == pda) {
+			if !(ll1 == lr0 && lr0 == pda && pda == cf) {
 				fmt.Println(word)
+				fmt.Println("cf:", cf)
 				fmt.Println("dpa:", pda)
 				fmt.Println("lr0:", lr0)
 				fmt.Println("ll1:", ll1)
@@ -336,11 +346,13 @@ func main() {
 	fmt.Println("Проверка для всех слов")
 	for i := 0; i < 500; i++ {
 		word := GenerateWords(3, 50)
+		cf := CYK(word, *grammar)
 		ll1 := CYK(word, *grammar_ll1)
 		lr0 := CYK(word, *grammar_lr0)
 		pda := checkNPDA(word, NPDA)
-		if !(ll1 == lr0 && lr0 == pda) {
+		if !(ll1 == lr0 && lr0 == pda && pda == cf) {
 			fmt.Println(word)
+			fmt.Println("cf:", cf)
 			fmt.Println("dpa:", pda)
 			fmt.Println("lr0:", lr0)
 			fmt.Println("ll1:", ll1)
