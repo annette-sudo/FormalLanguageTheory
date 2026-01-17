@@ -39,84 +39,84 @@ func generateT() string {
 	}
 }
 
-type DPDA_State struct {
+type NPDA_State struct {
 	order       int
-	transitions []*DPDA_Transition
+	transitions []*NPDA_Transition
 	final       bool
 }
 
-type DPDA_Transition struct {
-	EndState       *DPDA_State
+type NPDA_Transition struct {
+	EndState       *NPDA_State
 	symbol         byte
 	typeAction     string
 	symbolMagazine string
 }
 
-type DPDA struct {
-	States   []*DPDA_State
+type NPDA struct {
+	States   []*NPDA_State
 	Magazine string
 }
 
-func createDPDA() *DPDA {
-	q0 := &DPDA_State{order: 0, final: false}
-	q1 := &DPDA_State{order: 1, final: false}
-	q2 := &DPDA_State{order: 2, final: true}
-	q3 := &DPDA_State{order: 3, final: false}
-	q4 := &DPDA_State{order: 4, final: false}
-	q5 := &DPDA_State{order: 5, final: false}
-	q6 := &DPDA_State{order: 6, final: false}
-	q7 := &DPDA_State{order: 7, final: false}
-	q8 := &DPDA_State{order: 8, final: true}
+func createNPDA() *NPDA {
+	q0 := &NPDA_State{order: 0, final: false}
+	q1 := &NPDA_State{order: 1, final: false}
+	q2 := &NPDA_State{order: 2, final: true}
+	q3 := &NPDA_State{order: 3, final: false}
+	q4 := &NPDA_State{order: 4, final: false}
+	q5 := &NPDA_State{order: 5, final: false}
+	q6 := &NPDA_State{order: 6, final: false}
+	q7 := &NPDA_State{order: 7, final: false}
+	q8 := &NPDA_State{order: 8, final: true}
 
-	q0.transitions = []*DPDA_Transition{
+	q0.transitions = []*NPDA_Transition{
 		{EndState: q1, symbol: 'a', typeAction: "NONE"},
 		{EndState: q3, symbol: 'b', typeAction: "PUSH", symbolMagazine: "ABA"},
 	}
 
-	q1.transitions = []*DPDA_Transition{
+	q1.transitions = []*NPDA_Transition{
 		{EndState: q2, symbol: 'b', typeAction: "NONE"},
 	}
 
-	q3.transitions = []*DPDA_Transition{
+	q3.transitions = []*NPDA_Transition{
 		{EndState: q3, symbol: 'b', typeAction: "NONE"},
 		{EndState: q4, symbol: 'a', typeAction: "NONE"},
 		{EndState: q6, symbol: 'a', typeAction: "POP", symbolMagazine: "A"},
 	}
 
-	q4.transitions = []*DPDA_Transition{
+	q4.transitions = []*NPDA_Transition{
 		{EndState: q5, symbol: 'a', typeAction: "NONE"},
 		{EndState: q3, symbol: 'b', typeAction: "PUSH", symbolMagazine: "ABAA"},
 	}
 
-	q5.transitions = []*DPDA_Transition{
+	q5.transitions = []*NPDA_Transition{
 		{EndState: q3, symbol: 'b', typeAction: "NONE"},
 	}
 
-	q6.transitions = []*DPDA_Transition{
+	q6.transitions = []*NPDA_Transition{
 		{EndState: q3, symbol: 'e', typeAction: "POP", symbolMagazine: "A"},
 		{EndState: q7, symbol: 'a', typeAction: "NONE"},
 		{EndState: q8, symbol: 'e', typeAction: "LAST"},
 	}
 
-	q7.transitions = []*DPDA_Transition{
+	q7.transitions = []*NPDA_Transition{
 		{EndState: q3, symbol: 'a', typeAction: "POP", symbolMagazine: "B"},
 	}
 
-	DPDA := &DPDA{
-		States:   []*DPDA_State{q0, q1, q2, q3, q4, q5, q6},
+	NPDA := &NPDA{
+		States:   []*NPDA_State{q0, q1, q2, q3, q4, q5, q6},
 		Magazine: "",
 	}
 
-	return DPDA
+	return NPDA
 }
 
 type NPDA_IntermediateState struct {
 	currentWord string
-	state       *DPDA_State
+	state       *NPDA_State
 	magazine    string
 }
 
-func checkDPDA(word string, npda *DPDA) bool {
+func checkNPDA(word string, npda *NPDA) bool {
 	accepted := false
 	q0 := &NPDA_IntermediateState{
 		currentWord: word,
@@ -315,7 +315,7 @@ func main() {
 		return
 	}
 
-	DPDA := createDPDA()
+	NPDA := createNPDA()
 
 	fmt.Println("Проверка для слов из языка")
 	for i := 0; i < 1000; i++ {
@@ -323,7 +323,7 @@ func main() {
 		if len(word) < 50 {
 			ll1 := CYK(word, *grammar_ll1)
 			lr0 := CYK(word, *grammar_lr0)
-			pda := checkDPDA(word, DPDA)
+			pda := checkNPDA(word, NPDA)
 			if !(ll1 == lr0 && lr0 == pda) {
 				fmt.Println(word)
 				fmt.Println("dpa:", pda)
@@ -338,7 +338,7 @@ func main() {
 		word := GenerateWords(3, 50)
 		ll1 := CYK(word, *grammar_ll1)
 		lr0 := CYK(word, *grammar_lr0)
-		pda := checkDPDA(word, DPDA)
+		pda := checkNPDA(word, NPDA)
 		if !(ll1 == lr0 && lr0 == pda) {
 			fmt.Println(word)
 			fmt.Println("dpa:", pda)
