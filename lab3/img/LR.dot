@@ -1,0 +1,70 @@
+digraph LR_Automaton {
+    rankdir=LR;
+    node [shape=box];
+
+    0 [label="0\n• S\nS → • b T a a T\nS → • a b"];
+    1 [label="1\nS •", peripheries=2];
+    2 [label="2\nS → b • T a a T\nT → • a S T\nT → • b T\nT → • a"];
+    3 [label="3\nS → a • b"];
+    4 [label="4\nS → b T • a a T"];
+    5 [label="5\nT → a • S T\nT → a •\nS → • b T a a T\nS → • a b"];
+    6 [label="6\nT → b • T\nT → • a S T\nT → • b T\nT → • a"];
+    7 [label="7\nS → a b •"];
+    8 [label="8\nS → b T a • a T"];
+    9 [label="9\nT → a S • T\nT → • a S T\nT → • b T\nT → • a"];
+    10 [label="10\nT → b T •"];
+    11 [label="11\nS → b T a a • T\nT → • a S T\nT → • b T\nT → • a"];
+    12 [label="12\nT → a S T •"];
+    13 [label="13\nS → b T a a T •"];
+
+    0 -> 1 [label="S"];
+    0 -> 2 [label="b"];
+    0 -> 3 [label="a"];
+
+    2 -> 4 [label="T"];
+    2 -> 5 [label="a"];
+    2 -> 6 [label="b"];
+
+    3 -> 7 [label="b"];
+
+    4 -> 8 [label="a"];
+
+    5 -> 2 [label="b"];
+    5 -> 3 [label="a"];
+    5 -> 9 [label="S"];
+    5 -> 4 [label="ε"];
+    5 -> 10 [label="ε"];
+    5 -> 12 [label="ε"];
+    5 -> 13 [label="ε"];
+
+    6 -> 5 [label="a"];
+    6 -> 6 [label="b"];
+    6 -> 10 [label="T"];
+
+    7 -> 1 [label="ε"];
+    7 -> 9 [label="ε"];
+
+    8 -> 11 [label="a"];
+
+    9 -> 5 [label="a"];
+    9 -> 6 [label="b"];
+    9 -> 12 [label="T"];
+
+    10 -> 4 [label="ε"];
+    10 -> 10 [label="ε"];
+    10 -> 12 [label="ε"];
+    10 -> 13 [label="ε"];
+
+    11 -> 5 [label="a"];
+    11 -> 6 [label="b"];
+    11 -> 13 [label="T"];
+
+    12 -> 4 [label="ε"];
+    12 -> 10 [label="ε"];
+    12 -> 12 [label="ε"];
+    12 -> 13 [label="ε"];
+
+    13 -> 1 [label="ε"];
+    13 -> 9 [label="ε"];
+}
+
